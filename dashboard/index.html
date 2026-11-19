@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token Radar — pre-token protocols, ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <div class="brand"><span class="dot"></span><b>TOKEN&nbsp;RADAR</b><span class="sub" id="asof"></span></div>
+  <nav id="tabs">
+    <button data-tab="board" class="on">No token yet <span id="nBoard"></span></button>
+    <button data-tab="live">Has a token <span id="nLive"></span></button>
+    <button data-tab="aside">Set aside <span id="nAside"></span></button>
+    <button data-tab="method">Method &amp; tests</button>
+  </nav>
+  <div class="parity" id="parity"></div>
+</header>
+
+<section id="view-board">
+  <div class="deck">
+    <div class="card" id="ledgerCard">
+      <h2>All 758 protocols, accounted for</h2>
+      <div class="bar" id="ledgerBar"></div>
+      <ol class="ledger" id="ledgerList"></ol>
+    </div>
+    <div class="card" id="modelCard">
+      <h2>The model, fitted on this snapshot</h2>
+      <div class="eq" id="equation"></div>
+      <div class="val" id="validation"></div>
+      <div class="odds" id="oddsTable"></div>
+    </div>
+    <div class="card" id="scatterCard">
+      <h2>TVL vs value, log–log</h2>
+      <div id="scatter"></div>
+      <p class="cap">Grey: traded comps. Green: this board. Line: fitted curve; band: P25–P75 leave-one-out.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search name or slug  ( / )" autocomplete="off">
+    <select id="cat" aria-label="Category"></select>
+    <select id="chain" aria-label="Chain"></select>
+    <select id="list" aria-label="List"><option value="">All rows</option><option value="wl">Watchlist only</option></select>
+    <div class="pills" id="verdicts"></div>
+    <button id="csv" type="button">Export CSV</button>
+  </div>
+  <div class="best" id="best">
+    <div class="whatif">
+      <span class="lbl">Ticket</span><div class="seg" id="ticket"></div>
+      <span class="lbl">Share</span><div class="seg" id="share"></div>
+      <span class="lbl">Hurdle</span><div class="seg" id="hurdle"></div>
+    </div>
+    <span id="bestFarms"></span>
+    <span class="mut">FARM net ≥5% · THIN net &gt;0 · SKIP else</span>
+    <span class="count" id="bestCount"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table id="board">
+      <thead><tr>
+        <th data-sort="rank" class="num on">Rank</th>
+        <th data-sort="name">Protocol</th>
+        <th data-sort="tvl" class="num">TVL</th>
+        <th data-sort="chg" class="num">7d</th>
+        <th data-sort="age" class="num">No-token age</th>
+        <th data-sort="impl" class="num">Implied value</th>
+        <th data-sort="net" class="num">Farm plan</th>
+        <th data-sort="verdict" class="num">Net / verdict</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No row matches this filter.</p>
+  </div>
+</section>
+
+<section id="view-live" hidden>
+  <p class="intro">The 8 largest by market cap of the 416 protocols with a token — 128 trade, 288 on record; the model fits on 87 of the traded.</p>
+  <div class="tablewrap"><table id="liveTable">
+    <thead><tr><th>Protocol</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">Mcap / TVL</th><th class="num">7d</th></tr></thead>
+    <tbody id="liveRows"></tbody>
+  </table></div>
+</section>
+
+<section id="view-aside" hidden>
+  <p class="intro">Protocols set aside before ranking, each by a stated rule. The ledger counts them all; this table names them, largest TVL first.</p>
+  <div class="tablewrap"><table id="asideTable">
+    <thead><tr><th>Protocol</th><th>Category</th><th>Rule</th></tr></thead>
+    <tbody id="asideRows"></tbody>
+  </table></div>
+</section>
+
+<section id="view-method" hidden>
+  <div class="method" id="methodText"></div>
+</section>
+
+<aside id="detail" hidden></aside>
+
+<footer>
+  <span>Snapshot <b id="footAsOf"></b> · sealed, 758 protocols at TVL ≥ $5M.</span>
+  <span>Farm economics are <b>assumptions</b> — change them with the What-if toggles. Not financial advice.</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
